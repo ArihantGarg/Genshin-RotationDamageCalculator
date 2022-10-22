@@ -103,6 +103,17 @@ double overload(Character c)
     return outgoingdmg;
 }
 
+double superconduct(Character c)
+{
+    //Assumes no superconduct buff
+    if(c.resMult>1)
+        c.resMult=1+(c.resMult-1)/2;
+
+    double incomingdmg = 0.5 * c.lvlMult * ( 1 + ((16*c.em)/(c.em+2000)) );
+    double outgoingdmg = incomingdmg * c.resMult;
+    return outgoingdmg;
+}
+
 double dmg(Character c,double basedmg,double dmg,double resMult)
 {
     if(c.cr>100)
@@ -188,7 +199,7 @@ void venti()
 
 
 
-//Xiangling
+//XIANGLING
 void xiangling()
 {
     Character xiangling;
@@ -259,6 +270,15 @@ void xiangling()
 
 
 
+//YAE
+void yae()
+{
+    //TODO : AFTER NAHIDA RELEASE
+}
+
+
+
+
 
 void CheckCharacter(string s)
 {
@@ -266,6 +286,8 @@ void CheckCharacter(string s)
         venti();
     else if(s=="xiangling")
         xiangling();
+    else if(s=="yae")
+        yae();
     else
         cout<<"This character has no TC yet";
 }
