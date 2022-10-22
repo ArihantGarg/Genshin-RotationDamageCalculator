@@ -289,5 +289,5 @@ int main()
 
     ChooseCharacter();
 
-
+    return 0;
 }
