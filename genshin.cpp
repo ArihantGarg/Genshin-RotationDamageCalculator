@@ -167,6 +167,51 @@ double otherdmg(Character c,double basedmg)
 // CHARACTERS BELOW
 
 
+
+// CHARACTER_NAME
+void character()
+{
+    Character name;
+
+    GetStats(&name,0,0,0,0,0);
+
+    // Character Stats( lvl 90 , skill 8 , burst 8 , Weapon=WeaponName(BaseAtk))
+
+    name.baseatk=0;
+    name.basedef=0;
+    name.basehp=0;
+    name.skilltalent=0;
+    name.bursttalent=0;
+
+
+    //TEAM
+
+    cout<<"Enter team name : ";
+    string comp;
+    cin>>comp;
+    if(comp=="CompName")
+    {
+        //COMPNAME ( Weapon=WeaponName , Artifact = ArtifactName , Resonance=Resonances ; Buffs= Buffs )
+
+        /* CHANGES IN STATS */
+
+        // Assumptions for damage calculation
+
+        // Calculation for each damage source
+
+        double totaldmg=0;    //Add damage sources
+
+        cout<<"\n DAMAGE = "<<totaldmg<<"\n\n";
+    }
+    else
+    {
+        cout<<"No such team exists";
+    }
+
+}
+
+
+
 //VENTI
 void venti()
 {
