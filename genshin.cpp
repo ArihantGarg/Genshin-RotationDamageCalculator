@@ -27,6 +27,18 @@ struct Character
     double infusiontalent=0;
     double infusionresMult=1.15;
 
+    //NA dmg
+    double natalent=0;
+    double nadmg=0;
+
+    //CA dmg
+    double catalent=0;
+    double cadmg=0;
+
+    //Plunge dmg( high plunge )
+    double plungetalent=0;      
+    double plungedmg=0;
+
     //Skill dmg
     double skilltalent=0;
     double skilldmg=0;
@@ -141,6 +153,13 @@ double qdmg(Character c,double basedmg)
 double infusedmg(Character c,double basedmg)
 {
     return dmg(c,basedmg,c.infusiondmg,c.infusionresMult);
+}
+
+double otherdmg(Character c,double basedmg)
+{
+    //Already includes dmg%
+
+    return dmg(c,basedmg,0,c.resMult);
 }
 
 
@@ -278,6 +297,72 @@ void yae()
 
 
 
+//XIAO
+void xiao()
+{
+    Character xiao;
+    
+    GetStats(&xiao,1,0,0,0,0);
+
+    // Character Stats( lvl 90 , normal 8 , skill 8 , burst 8 , Weapon=Blackcliff(no stacks)(510))
+
+    xiao.baseatk=349.2+510;
+    xiao.basedef=799.3;
+    xiao.basehp=12736;
+    xiao.plungetalent=0.5*(139.88) + 349.36; //avg bonk dmg to 50% bonks
+    xiao.skilltalent=404.48;
+
+
+    // TEAM
+
+    cout<<"Enter team name : ";
+    string comp;
+    cin>>comp;
+    if(comp=="xiaojeangeo")  
+    {
+        //XIAOJEANGEO ( Weapon=Blackcliff( 0 stacks ) , Artifact = 4 Vermillion , Resonance=2 GEO(15% dmg),2 ANEMO(nothing) ; Buffs= 20%res( zhongli ) , avg 95% plungedmg (xiao) , avg 7.5% Skilldmg (xiao) , avg 60% atk (xiao))
+        // Assuming burst mode, anemo goblet
+
+        xiao.atk+=xiao.baseatk*0.6;
+        xiao.dmg+=15;
+        xiao.skilldmg+= xiao.dmg+ 7.5 ;
+        xiao.plungedmg+= xiao.dmg+ 95 ; //averaged approx
+        xiao.resMult+=0.20; 
+
+        // Assume aoe , 11 high plunges , 2 skills
+
+        double plungedmg = 11 * otherdmg ( xiao , xiao.atk*xiao.plungetalent/100*(1+xiao.plungedmg/100));
+        double skilldmg = 2 * edmg ( xiao , xiao.atk*xiao.skilltalent/100 ) ;
+        double totaldmg=plungedmg+skilldmg;
+
+        cout<<"\n DAMAGE = "<<totaldmg<<"\n\n";
+    }
+    else if(comp=="xiaosucrosegeo")
+    {
+        //XIAOSUCROSEGEO ( Weapon=Blackcliff( 0 stacks ) , Artifact = 4 Vermillion , Resonance=2 GEO(15% dmg),2 ANEMO(nothing) ; Buffs= 20%res( zhongli ) , avg 42%atk(ttds sucrose) , avg 95% plungedmg (xiao) , avg 7.5% Skilldmg (xiao) , avg 60% atk (xiao))
+        // Assuming burst mode, anemo goblet
+
+        xiao.atk+=xiao.baseatk*(0.6+0.42);
+        xiao.dmg+=15;
+        xiao.skilldmg+= xiao.dmg+ 7.5 ;
+        xiao.plungedmg+= xiao.dmg+ 95 ; //averaged approx
+        xiao.resMult+=0.20; 
+
+        // Assume aoe , 11 high plunges , 2 skills
+
+        double plungedmg = 11 * otherdmg ( xiao , xiao.atk*xiao.plungetalent/100*(1+xiao.plungedmg/100));
+        double skilldmg = 2 * edmg ( xiao , xiao.atk*xiao.skilltalent/100 ) ;
+        double totaldmg=plungedmg+skilldmg;
+
+        cout<<"\n DAMAGE = "<<totaldmg<<"\n\n";
+    }
+    else
+    {
+        cout<<"No such team exists";
+    }
+}
+
+
 
 
 void CheckCharacter(string s)
@@ -288,6 +373,8 @@ void CheckCharacter(string s)
         xiangling();
     else if(s=="yae")
         yae();
+    else if (s=="xiao")
+        xiao();
     else
         cout<<"This character has no TC yet";
 }
